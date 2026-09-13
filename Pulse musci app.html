@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080812">
+<title>Enaiat Music</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg1:#070812;
+  --bg2:#21104b;
+  --a:#9b6cff;
+  --b:#ec72ff;
+  --text:#fff;
+  --muted:#aaaabc;
+  --glass:rgba(255,255,255,.075);
+  --border:rgba(255,255,255,.15);
+}
+
+html,body{
+  min-height:100%;
+  background:#070812;
+}
+
+body{
+  min-height:100vh;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,var(--a),transparent 28%),
+    radial-gradient(circle at 85% 20%,var(--b),transparent 27%),
+    linear-gradient(135deg,var(--bg1),var(--bg2));
+  background-attachment:fixed;
+  overflow-x:hidden;
+  transition:background 1s;
+}
+
+/* =========================
+   THEMES
+========================= */
+
+body.theme-ocean{
+  --bg1:#03121e;
+  --bg2:#034766;
+  --a:#20c8ff;
+  --b:#536dff;
+}
+
+body.theme-sunset{
+  --bg1:#190608;
+  --bg2:#661c28;
+  --a:#ff7b54;
+  --b:#ff3d81;
+}
+
+body.theme-emerald{
+  --bg1:#02120c;
+  --bg2:#064a37;
+  --a:#38e6a5;
+  --b:#22baff;
+}
+
+body.theme-rose{
+  --bg1:#170710;
+  --bg2:#581b48;
+  --a:#ff5ca8;
+  --b:#a86bff;
+}
+
+body.theme-gold{
+  --bg1:#120d03;
+  --bg2:#503507;
+  --a:#ffc857;
+  --b:#ff853d;
+}
+
+body.theme-cyber{
+  --bg1:#02020b;
+  --bg2:#270044;
+  --a:#00f5ff;
+  --b:#ff00d4;
+}
+
+body.theme-ice{
+  --bg1:#06101b;
+  --bg2:#123e63;
+  --a:#72e4ff;
+  --b:#8e8cff;
+}
+
+body.theme-aurora{
+  --bg1:#020817;
+  --bg2:#092d39;
+  --a:#00ffb3;
+  --b:#8b5cff;
+}
+
+body.theme-lightning{
+  --bg1:#03040b;
+  --bg2:#101b43;
+  --a:#5cc8ff;
+  --b:#d6e7ff;
+}
+
+body.theme-galaxy{
+  --bg1:#02010b;
+  --bg2:#180b38;
+  --a:#8d65ff;
+  --b:#ff62e8;
+}
+
+body.theme-fire{
+  --bg1:#100300;
+  --bg2:#481004;
+  --a:#ff8a00;
+  --b:#ff1744;
+}
+
+body.theme-liveocean{
+  --bg1:#00121a;
+  --bg2:#003b4d;
+  --a:#00eaff;
+  --b:#0077ff;
+}
+
+body.theme-neon{
+  --bg1:#10002b;
+  --bg2:#26003e;
+  --a:#ff00cc;
+  --b:#00ffff;
+}
+
+body.theme-midnight{
+  --bg1:#02030b;
+  --bg2:#18224f;
+  --a:#526dff;
+  --b:#8b9dff;
+}
+
+body.theme-candy{
+  --bg1:#26051c;
+  --bg2:#54205c;
+  --a:#ff70c8;
+  --b:#8d7bff;
+}
+
+body.theme-matrix{
+  --bg1:#001500;
+  --bg2:#063b19;
+  --a:#00ff66;
+  --b:#00c94f;
+}
+
+body.theme-volcano{
+  --bg1:#160000;
+  --bg2:#481000;
+  --a:#ff3100;
+  --b:#ffb000;
+}
+
+body.theme-sakura{
+  --bg1:#210514;
+  --bg2:#581c3d;
+  --a:#ff70a8;
+  --b:#ffd1e6;
+}
+
+body.theme-mono{
+  --bg1:#050505;
+  --bg2:#292929;
+  --a:#aaa;
+  --b:#fff;
+}
+
+body.theme-space{
+  --bg1:#02000d;
+  --bg2:#302080;
+  --a:#00bfff;
+  --b:#9366ff;
+}
+
+/* NEW NATURE THEMES */
+
+body.theme-forest{
+  --bg1:#03150a;
+  --bg2:#0b4a29;
+  --a:#4ee878;
+  --b:#a8ff78;
+}
+
+body.theme-tropical{
+  --bg1:#001b16;
+  --bg2:#006044;
+  --a:#00e6a8;
+  --b:#8cff65;
+}
+
+body.theme-meadow{
+  --bg1:#10240b;
+  --bg2:#467a2c;
+  --a:#9ee85b;
+  --b:#e1ff78;
+}
+
+/* =========================
+   BACKGROUND EFFECTS
+========================= */
+
+.effect{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(65px);
+  opacity:.25;
+  animation:float 12s ease-in-out infinite alternate;
+}
+
+.orb.one{
+  width:280px;
+  height:280px;
+  background:var(--a);
+  left:-100px;
+  top:15%;
+}
+
+.orb.two{
+  width:250px;
+  height:250px;
+  background:var(--b);
+  right:-80px;
+  bottom:10%;
+  animation-delay:-4s;
+}
+
+@keyframes float{
+  to{
+    transform:translate(80px,-60px) scale(1.25);
+  }
+}
+
+.stars{
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(white 1px,transparent 1px),
+    radial-gradient(rgba(255,255,255,.7) 1px,transparent 1px);
+  background-size:75px 75px,130px 130px;
+  opacity:0;
+  animation:stars 30s linear infinite;
+}
+
+body.theme-galaxy .stars,
+body.theme-aurora .stars,
+body.theme-space .stars{
+  opacity:.45;
+}
+
+@keyframes stars{
+  to{
+    transform:translateY(80px);
+  }
+}
+
+.aurora{
+  position:absolute;
+  width:120%;
+  height:45%;
+  left:-10%;
+  top:8%;
+  opacity:0;
+  filter:blur(35px);
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(0,255,180,.25),
+      rgba(120,70,255,.28),
+      transparent
+    );
+  transform:rotate(-8deg);
+  animation:aurora 10s ease-in-out infinite alternate;
+}
+
+body.theme-aurora .aurora{
+  opacity:1;
+}
+
+@keyframes aurora{
+  to{
+    transform:translateX(8%) rotate(8deg);
+  }
+}
+
+.fire{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  background:
+    radial-gradient(circle at 20% 100%,rgba(255,100,0,.28),transparent 25%),
+    radial-gradient(circle at 70% 100%,rgba(255,30,0,.25),transparent 25%);
+}
+
+body.theme-fire .fire,
+body.theme-volcano .fire{
+  opacity:1;
+  animation:fire 2s ease-in-out infinite alternate;
+}
+
+@keyframes fire{
+  to{
+    filter:brightness(1.35);
+  }
+}
+
+/* LIGHTNING */
+
+.lightning{
+  position:absolute;
+  inset:0;
+  opacity:0;
+}
+
+body.theme-lightning .lightning{
+  opacity:1;
+}
+
+.bolt{
+  position:absolute;
+  width:4px;
+  height:190px;
+  background:white;
+  filter:
+    drop-shadow(0 0 8px white)
+    drop-shadow(0 0 25px #59cfff);
+  clip-path:
+    polygon(
+      55% 0,
+      100% 0,
+      61% 43%,
+      84% 43%,
+      24% 100%,
+      39% 54%,
+      14% 54%
+    );
+  opacity:0;
+}
+
+.bolt.one{
+  left:16%;
+  top:8%;
+  animation:flash 5s infinite;
+}
+
+.bolt.two{
+  right:17%;
+  top:18%;
+  animation:flash 7s 2s infinite;
+}
+
+.bolt.three{
+  left:48%;
+  top:0;
+  animation:flash 9s 4s infinite;
+}
+
+@keyframes flash{
+  0%,82%,100%{
+    opacity:0;
+  }
+  84%,86%{
+    opacity:1;
+  }
+  85%,88%{
+    opacity:.1;
+  }
+}
+
+/* =========================
+   GLASS
+========================= */
+
+.glass{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.13),
+      rgba(255,255,255,.035)
+    );
+  border:1px solid var(--border);
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.32),
+    inset 0 1px rgba(255,255,255,.08);
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+  width:100%;
+  max-width:560px;
+  min-height:100vh;
+  margin:auto;
+  padding:20px 14px 110px;
+}
+
+/* HEADER */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+.mini{
+  font-size:9px;
+  letter-spacing:3px;
+  font-weight:800;
+  color:var(--a);
+}
+
+.logo{
+  font-size:31px;
+  font-weight:850;
+  letter-spacing:-1.5px;
+}
+
+.created{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.head-buttons{
+  display:flex;
+  gap:7px;
+}
+
+.icon-btn{
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:white;
+  cursor:pointer;
+  font-size:19px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.icon-btn:active{
+  transform:scale(.94);
+}
+
+/* SEARCH */
+
+.search{
+  height:50px;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 15px;
+  margin-bottom:14px;
+}
+
+.search input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  font-size:14px;
+}
+
+.search input::placeholder{
+  color:var(--muted);
+}
+
+/* =========================
+   THEMES PANEL
+========================= */
+
+.theme-panel{
+  display:none;
+  padding:14px;
+  border-radius:20px;
+  margin-bottom:14px;
+}
+
+.theme-panel.show{
+  display:block;
+}
+
+.theme-title{
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+.themes{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.theme{
+  height:51px;
+  border-radius:13px;
+  border:2px solid transparent;
+  color:white;
+  cursor:pointer;
+  font-size:8px;
+  font-weight:bold;
+  position:relative;
+  overflow:hidden;
+}
+
+.theme.active{
+  border-color:white;
+  box-shadow:0 0 15px var(--a);
+}
+
+.theme span{
+  position:absolute;
+  bottom:5px;
+  left:0;
+  right:0;
+  text-shadow:0 1px 5px #000;
+}
+
+/* THEME BUTTON COLORS */
+
+.t-purple{
+  background:linear-gradient(135deg,#13072e,#9b6cff,#ec72ff);
+}
+
+.t-ocean{
+  background:linear-gradient(135deg,#031722,#20c8ff,#536dff);
+}
+
+.t-sunset{
+  background:linear-gradient(135deg,#220607,#ff7b54,#ff3d81);
+}
+
+.t-emerald{
+  background:linear-gradient(135deg,#03130e,#38e6a5,#25b9ff);
+}
+
+.t-rose{
+  background:linear-gradient(135deg,#180812,#ff5ca8,#a86bff);
+}
+
+.t-gold{
+  background:linear-gradient(135deg,#151005,#ffc857,#ff853d);
+}
+
+.t-cyber{
+  background:linear-gradient(135deg,#05050d,#00f5ff,#ff00d4);
+}
+
+.t-ice{
+  background:linear-gradient(135deg,#07111d,#72e4ff,#8f8cff);
+}
+
+.t-aurora{
+  background:linear-gradient(135deg,#02120f,#00ffb3,#8b5cff);
+}
+
+.t-lightning{
+  background:linear-gradient(135deg,#02030b,#4baeff,#eef8ff);
+}
+
+.t-galaxy{
+  background:linear-gradient(135deg,#03010c,#7655ff,#ff62e8);
+}
+
+.t-fire{
+  background:linear-gradient(135deg,#190300,#ff7a00,#ff1744);
+}
+
+.t-liveocean{
+  background:linear-gradient(135deg,#001018,#00eaff,#0066ff);
+}
+
+.t-neon{
+  background:linear-gradient(135deg,#10002b,#ff00cc,#00ffff);
+}
+
+.t-midnight{
+  background:linear-gradient(135deg,#02030b,#18224f,#526dff);
+}
+
+.t-candy{
+  background:linear-gradient(135deg,#ff8fc7,#ff5ee7,#8d7bff);
+}
+
+.t-matrix{
+  background:linear-gradient(135deg,#001500,#00ff66,#063b19);
+}
+
+.t-volcano{
+  background:linear-gradient(135deg,#160000,#ff3100,#ffb000);
+}
+
+.t-sakura{
+  background:linear-gradient(135deg,#210514,#ff70a8,#ffd1e6);
+}
+
+.t-mono{
+  background:linear-gradient(135deg,#050505,#555,#eee);
+}
+
+.t-space{
+  background:linear-gradient(135deg,#02000d,#302080,#00bfff);
+}
+
+/* NEW NATURE BUTTONS */
+
+.t-forest{
+  background:linear-gradient(135deg,#031b0b,#126b38,#5fcf70);
+}
+
+.t-tropical{
+  background:linear-gradient(135deg,#003b2b,#00a878,#7ee85c);
+}
+
+.t-meadow{
+  background:linear-gradient(135deg,#163d16,#5fae45,#d7e96b);
+}
+
+/* =========================
+   NOW PLAYING
+========================= */
+
+.now{
+  border-radius:28px;
+  padding:18px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.fav-main{
+  position:absolute;
+  top:15px;
+  right:15px;
+  z-index:2;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.15);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.fav-main.active{
+  color:#ff5b9d;
+}
+
+.art{
+  width:205px;
+  height:205px;
+  margin:3px auto 18px;
+  border-radius:35px;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,.5),
+      transparent 20%
+    ),
+    linear-gradient(135deg,var(--a),var(--b));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:70px;
+  position:relative;
+  box-shadow:
+    0 28px 65px rgba(0,0,0,.42),
+    inset 0 1px rgba(255,255,255,.3);
+}
+
+.art:before{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);
+}
+
+.art-symbol{
+  position:relative;
+  z-index:2;
+}
+
+body.playing .art{
+  animation:pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  50%{
+    transform:scale(1.025);
+  }
+}
+
+.now-label{
+  color:var(--a);
+  font-size:9px;
+  letter-spacing:2px;
+  font-weight:800;
+}
+
+.title{
+  font-size:20px;
+  font-weight:800;
+  margin-top:6px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-card{
+  margin-top:12px;
+  border-radius:20px;
+  padding:14px;
+}
+
+.time{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:8px;
+}
+
+input[type=range]{
+  appearance:none;
+  width:100%;
+  height:5px;
+  border-radius:20px;
+  background:rgba(255,255,255,.12);
+  cursor:pointer;
+}
+
+input[type=range]::-webkit-slider-thumb{
+  appearance:none;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 0 15px var(--a);
+}
+
+input[type=range]::-moz-range-thumb{
+  width:14px;
+  height:14px;
+  border:0;
+  border-radius:50%;
+  background:white;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:16px;
+}
+
+.ctrl{
+  width:39px;
+  height:39px;
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  opacity:.75;
+}
+
+.ctrl.active{
+  color:var(--a);
+  opacity:1;
+}
+
+.play{
+  width:66px;
+  height:66px;
+  border-radius:50%;
+  border:0;
+  background:linear-gradient(135deg,var(--a),var(--b));
+  color:white;
+  font-size:23px;
+  cursor:pointer;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.play:active{
+  transform:scale(.94);
+}
+
+/* =========================
+   VOLUME
+========================= */
+
+.volume{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:16px 10px 0;
+}
+
+.volume-icon{
+  width:25px;
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:19px;
+  cursor:pointer;
+}
+
+.volume input{
+  flex:1;
+}
+
+/* =========================
+   LIBRARY
+========================= */
+
+.library{
+  margin-top:23px;
+}
+
+.library-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.library-head h2{
+  font-size:20px;
+}
+
+.count{
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* SCROLLABLE SONG LIST */
+
+.playlist{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+
+  max-height:370px;
+  overflow-y:auto;
+
+  padding-right:4px;
+
+  scrollbar-width:thin;
+  scrollbar-color:var(--a) transparent;
+}
+
+.playlist::-webkit-scrollbar{
+  width:5px;
+}
+
+.playlist::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.playlist::-webkit-scrollbar-thumb{
+  background:var(--a);
+  border-radius:10px;
+}
+
+.song{
+  min-height:67px;
+  flex-shrink:0;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:9px;
+  cursor:pointer;
+}
+
+.song:active{
+  transform:scale(.99);
+}
+
+.song.active{
+  background:rgba(155,108,255,.14);
+  border-color:rgba(155,108,255,.4);
+}
+
+.num{
+  width:21px;
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.song-art{
+  width:44px;
+  height:44px;
+  flex-shrink:0;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--a),var(--b));
+}
+
+.song-info{
+  flex:1;
+  min-width:0;
+}
+
+.song-name{
+  font-size:13px;
+  font-weight:650;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.status{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:4px;
+}
+
+.song-fav{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:19px;
+  padding:5px;
+  cursor:pointer;
+}
+
+.song-fav.active{
+  color:#ff5b9d;
+}
+
+/* EMPTY */
+
+.empty{
+  padding:35px 12px;
+  text-align:center;
+  border-radius:20px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:40px;
+  margin-bottom:9px;
+}
+
+.empty strong{
+  display:block;
+  color:white;
+  margin-bottom:5px;
+}
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.7;
+  margin-top:25px;
+}
+
+.footer strong{
+  color:var(--a);
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom{
+  position:fixed;
+  z-index:100;
+  left:50%;
+  bottom:10px;
+  transform:translateX(-50%);
+  width:min(calc(100% - 24px),520px);
+  height:64px;
+  border-radius:22px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.nav{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  min-width:70px;
+}
+
+.nav span{
+  font-size:19px;
+}
+
+.nav small{
+  font-size:9px;
+}
+
+.nav.active{
+  color:var(--a);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:430px){
+
+  .app{
+    padding:17px 11px 105px;
+  }
+
+  .art{
+    width:190px;
+    height:190px;
+  }
+
+  .controls{
+    gap:9px;
+  }
+
+  .play{
+    width:61px;
+    height:61px;
+  }
+
+  .themes{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .playlist{
+    max-height:350px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="effect">
+
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <div class="stars"></div>
+
+  <div class="aurora"></div>
+
+  <div class="fire"></div>
+
+  <div class="lightning">
+    <div class="bolt one"></div>
+    <div class="bolt two"></div>
+    <div class="bolt three"></div>
+  </div>
+
+</div>
+
+<main class="app">
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div>
+    <div class="mini">ENAIAT MUSIC</div>
+    <div class="logo">Pulse</div>
+    <div class="created">Created by Enaiat</div>
+  </div>
+
+  <div class="head-buttons">
+
+    <button
+      class="icon-btn"
+      id="fullscreenButton"
+      aria-label="Fullscreen">
+      ⛶
+    </button>
+
+    <button
+      class="icon-btn"
+      id="themeButton"
+      aria-label="Themes">
+      🎨
+    </button>
+
+    <label
+      class="icon-btn"
+      aria-label="Add music">
+
+      +
+
+      <input
+        id="fileInput"
+        type="file"
+        accept="audio/*,.mp3"
+        multiple
+        hidden>
+
+    </label>
+
+  </div>
+
+</header>
+
+<!-- THEMES -->
+
+<section
+  id="themePanel"
+  class="theme-panel glass">
+
+  <div class="theme-title">
+    Choose your world ✨
+  </div>
+
+  <div class="themes">
+
+    <button class="theme t-purple active" data-theme="purple">
+      <span>Purple</span>
+    </button>
+
+    <button class="theme t-ocean" data-theme="ocean">
+      <span>Ocean</span>
+    </button>
+
+    <button class="theme t-sunset" data-theme="sunset">
+      <span>Sunset</span>
+    </button>
+
+    <button class="theme t-emerald" data-theme="emerald">
+      <span>Emerald</span>
+    </button>
+
+    <button class="theme t-rose" data-theme="rose">
+      <span>Rose</span>
+    </button>
+
+    <button class="theme t-gold" data-theme="gold">
+      <span>Gold</span>
+    </button>
+
+    <button class="theme t-cyber" data-theme="cyber">
+      <span>Cyber</span>
+    </button>
+
+    <button class="theme t-ice" data-theme="ice">
+      <span>Ice</span>
+    </button>
+
+    <button class="theme t-aurora" data-theme="aurora">
+      <span>✨ Aurora</span>
+    </button>
+
+    <button class="theme t-lightning" data-theme="lightning">
+      <span>⚡ Lightning</span>
+    </button>
+
+    <button class="theme t-galaxy" data-theme="galaxy">
+      <span>🌌 Galaxy</span>
+    </button>
+
+    <button class="theme t-fire" data-theme="fire">
+      <span>🔥 Fire</span>
+    </button>
+
+    <button class="theme t-liveocean" data-theme="liveocean">
+      <span>🌊 Live Ocean</span>
+    </button>
+
+    <button class="theme t-neon" data-theme="neon">
+      <span>💜 Neon</span>
+    </button>
+
+    <button class="theme t-midnight" data-theme="midnight">
+      <span>🌙 Midnight</span>
+    </button>
+
+    <button class="theme t-candy" data-theme="candy">
+      <span>🍭 Candy</span>
+    </button>
+
+    <button class="theme t-matrix" data-theme="matrix">
+      <span>💚 Matrix</span>
+    </button>
+
+    <button class="theme t-volcano" data-theme="volcano">
+      <span>🌋 Volcano</span>
+    </button>
+
+    <button class="theme t-sakura" data-theme="sakura">
+      <span>🌸 Sakura</span>
+    </button>
+
+    <button class="theme t-mono" data-theme="mono">
+      <span>🖤 Mono</span>
+    </button>
+
+    <button class="theme t-space" data-theme="space">
+      <span>🚀 Space</span>
+    </button>
+
+    <!-- NEW NATURE THEMES -->
+
+    <button class="theme t-forest" data-theme="forest">
+      <span>🌲 Forest</span>
+    </button>
+
+    <button class="theme t-tropical" data-theme="tropical">
+      <span>🌴 Tropical</span>
+    </button>
+
+    <button class="theme t-meadow" data-theme="meadow">
+      <span>🌿 Meadow</span>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- SEARCH -->
+
+<div class="search glass">
+
+  <span>⌕</span>
+
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="Search your music...">
+
+</div>
+
+<!-- NOW PLAYING -->
+
+<section class="now glass">
+
+  <button
+    id="favoriteButton"
+    class="fav-main">
+    ♡
+  </button>
+
+  <div class="art">
+    <span class="art-symbol">♪</span>
+  </div>
+
+  <div class="now-label">
+    NOW PLAYING
+  </div>
+
+  <div
+    id="songTitle"
+    class="title">
+    No song selected
+  </div>
+
+  <div
+    id="songSubtitle"
+    class="subtitle">
+    Choose MP3 files from your phone
+  </div>
+
+</section>
+
+<!-- PROGRESS -->
+
+<section class="progress-card glass">
+
+  <div class="time">
+
+    <span id="currentTime">
+      0:00
+    </span>
+
+    <span id="duration">
+      0:00
+    </span>
+
+  </div>
+
+  <input
+    id="progress"
+    type="range"
+    min="0"
+    max="100"
+    value="0">
+
+</section>
+
+<!-- CONTROLS -->
+
+<section class="controls">
+
+  <button
+    id="shuffleButton"
+    class="ctrl">
+    🔀
+  </button>
+
+  <button
+    id="previousButton"
+    class="ctrl">
+    ⏮
+  </button>
+
+  <button
+    id="playButton"
+    class="play">
+    ▶
+  </button>
+
+  <button
+    id="nextButton"
+    class="ctrl">
+    ⏭
+  </button>
+
+  <button
+    id="repeatButton"
+    class="ctrl">
+    🔁
+  </button>
+
+</section>
+
+<!-- VOLUME -->
+
+<section class="volume">
+
+  <button
+    id="muteButton"
+    class="volume-icon">
+    🔊
+  </button>
+
+  <input
+    id="volume"
+    type="range"
+    min="0"
+    max="1"
+    step=".01"
+    value="1">
+
+</section>
+
+<!-- MUSIC -->
+
+<section class="library">
+
+  <div class="library-head">
+
+    <h2>
+      My Music
+    </h2>
+
+    <span
+      id="songCount"
+      class="count">
+      0 songs
+    </span>
+
+  </div>
+
+  <div
+    id="playlist"
+    class="playlist">
+
+    <div class="empty glass">
+
+      <div class="empty-icon">
+        🎵
+      </div>
+
+      <strong>
+        Your music is waiting
+      </strong>
+
+      <span>
+        Tap + and choose MP3 files
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+  This app was created by
+  <strong>Enaiat</strong>
+
+  <br>
+
+  Your music • Your style • Your world
+
+</footer>
+
+<audio
+  id="audio"
+  playsinline
+  preload="metadata">
+</audio>
+
+</main>
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom glass">
+
+  <button
+    id="musicTab"
+    class="nav active">
+
+    <span>♫</span>
+    <small>Music</small>
+
+  </button>
+
+  <button
+    id="favoriteTab"
+    class="nav">
+
+    <span>♡</span>
+    <small>Favorites</small>
+
+  </button>
+
+  <button
+    id="themeTab"
+    class="nav">
+
+    <span>🎨</span>
+    <small>Themes</small>
+
+  </button>
+
+</nav>
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const audio =
+  document.getElementById("audio");
+
+const fileInput =
+  document.getElementById("fileInput");
+
+const playButton =
+  document.getElementById("playButton");
+
+const previousButton =
+  document.getElementById("previousButton");
+
+const nextButton =
+  document.getElementById("nextButton");
+
+const shuffleButton =
+  document.getElementById("shuffleButton");
+
+const repeatButton =
+  document.getElementById("repeatButton");
+
+const progress =
+  document.getElementById("progress");
+
+const volume =
+  document.getElementById("volume");
+
+const muteButton =
+  document.getElementById("muteButton");
+
+const songTitle =
+  document.getElementById("songTitle");
+
+const songSubtitle =
+  document.getElementById("songSubtitle");
+
+const currentTime =
+  document.getElementById("currentTime");
+
+const duration =
+  document.getElementById("duration");
+
+const playlist =
+  document.getElementById("playlist");
+
+const songCount =
+  document.getElementById("songCount");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const favoriteButton =
+  document.getElementById("favoriteButton");
+
+const themeButton =
+  document.getElementById("themeButton");
+
+const themePanel =
+  document.getElementById("themePanel");
+
+const fullscreenButton =
+  document.getElementById("fullscreenButton");
+
+
+/* =========================
+   PLAYER STATE
+========================= */
+
+let songs = [];
+
+let currentIndex = 0;
+
+let shuffleMode = false;
+
+let repeatMode = false;
+
+let favoritesOnly = false;
+
+let lastVolume = 1;
+
+
+/* =========================
+   THEME
+========================= */
+
+const savedTheme =
+  localStorage.getItem("enaiat-theme");
+
+if(savedTheme){
+  applyTheme(savedTheme);
+}
+
+function applyTheme(theme){
+
+  document.body.classList.remove(
+
+    "theme-ocean",
+    "theme-sunset",
+    "theme-emerald",
+    "theme-rose",
+    "theme-gold",
+    "theme-cyber",
+    "theme-ice",
+    "theme-aurora",
+    "theme-lightning",
+    "theme-galaxy",
+    "theme-fire",
+    "theme-liveocean",
+    "theme-neon",
+    "theme-midnight",
+    "theme-candy",
+    "theme-matrix",
+    "theme-volcano",
+    "theme-sakura",
+    "theme-mono",
+    "theme-space",
+
+    "theme-forest",
+    "theme-tropical",
+    "theme-meadow"
+
+  );
+
+  if(theme !== "purple"){
+
+    document.body.classList.add(
+      "theme-" + theme
+    );
+
+  }
+
+  document
+    .querySelectorAll(".theme")
+    .forEach(btn=>{
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.theme === theme
+      );
+
+    });
+}
+
+
+/* THEME SELECTION
+   MENU CLOSES AFTER CHOOSING */
+
+document
+  .querySelectorAll(".theme")
+  .forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+      const theme =
+        btn.dataset.theme;
+
+      applyTheme(theme);
+
+      localStorage.setItem(
+        "enaiat-theme",
+        theme
+      );
+
+      /* CLOSE MENU */
+
+      themePanel.classList.remove("show");
+
+      document
+        .getElementById("themeTab")
+        .classList.remove("active");
+
+      document
+        .getElementById("musicTab")
+        .classList.add("active");
+
+    });
+
+  });
+
+
+/* OPEN/CLOSE THEME MENU */
+
+themeButton.addEventListener(
+  "click",
+  ()=>{
+
+    themePanel.classList.toggle("show");
+
+  }
+);
+
+
+/* =========================
+   FILES
+========================= */
+
+fileInput.addEventListener(
+  "change",
+  ()=>{
+
+    const files =
+      Array.from(fileInput.files);
+
+    if(!files.length)
+      return;
+
+    songs.forEach(song=>{
+
+      try{
+        URL.revokeObjectURL(song.url);
+      }catch(e){}
+
+    });
+
+    songs =
+      files.map(file=>({
+
+        name:file.name,
+
+        url:URL.createObjectURL(file),
+
+        favorite:false
+
+      }));
+
+    currentIndex=0;
+
+    favoritesOnly=false;
+
+    loadSong(0);
+
+    renderPlaylist();
+
+  }
+);
+
+
+/* =========================
+   LOAD SONG
+========================= */
+
+function loadSong(index){
+
+  if(!songs.length)
+    return;
+
+  if(index < 0)
+    index=songs.length-1;
+
+  if(index >= songs.length)
+    index=0;
+
+  currentIndex=index;
+
+  const song =
+    songs[index];
+
+  audio.src=song.url;
+
+  audio.load();
+
+  songTitle.textContent =
+    cleanName(song.name);
+
+  songSubtitle.textContent =
+    "Local MP3 • Enaiat Music";
+
+  currentTime.textContent =
+    "0:00";
+
+  duration.textContent =
+    "0:00";
+
+  progress.value=0;
+
+  updateFavorite();
+
+  updateMediaSession();
+
+  renderPlaylist();
+
+}
+
+
+/* =========================
+   PLAY / PAUSE
+========================= */
+
+playButton.addEventListener(
+  "click",
+  async()=>{
+
+    if(!songs.length){
+
+      alert(
+        "Please choose an MP3 file first."
+      );
+
+      return;
+
+    }
+
+    try{
+
+      if(audio.paused){
+
+        await audio.play();
+
+      }else{
+
+        audio.pause();
+
+      }
+
+    }catch(error){
+
+      console.log(
+        "Phone playback:",
+        error
+      );
+
+    }
+
+  }
+);
+
+
+audio.addEventListener(
+  "play",
+  ()=>{
+
+    playButton.textContent="⏸";
+
+    document.body.classList.add(
+      "playing"
+    );
+
+    updateMediaSession();
+
+    renderPlaylist();
+
+  }
+);
+
+
+audio.addEventListener(
+  "pause",
+  ()=>{
+
+    playButton.textContent="▶";
+
+    document.body.classList.remove(
+      "playing"
+    );
+
+    renderPlaylist();
+
+  }
+);
+
+
+/* =========================
+   NEXT
+========================= */
+
+nextButton.addEventListener(
+  "click",
+  nextSong
+);
+
+function nextSong(){
+
+  if(!songs.length)
+    return;
+
+  if(
+    shuffleMode &&
+    songs.length > 1
+  ){
+
+    let next;
+
+    do{
+
+      next =
+        Math.floor(
+          Math.random() *
+          songs.length
+        );
+
+    }while(
+      next === currentIndex
+    );
+
+    currentIndex=next;
+
+  }else{
+
+    currentIndex++;
+
+    if(
+      currentIndex >=
+      songs.length
+    ){
+
+      currentIndex=0;
+
+    }
+
+  }
+
+  loadSong(currentIndex);
+
+  audio.play().catch(()=>{});
+
+}
+
+
+/* =========================
+   PREVIOUS
+========================= */
+
+previousButton.addEventListener(
+  "click",
+  ()=>{
+
+    if(!songs.length)
+      return;
+
+    if(audio.currentTime > 3){
+
+      audio.currentTime=0;
+
+      return;
+
+    }
+
+    currentIndex--;
+
+    if(currentIndex < 0)
+      currentIndex=songs.length-1;
+
+    loadSong(currentIndex);
+
+    audio.play().catch(()=>{});
+
+  }
+);
+
+
+/* =========================
+   END
+========================= */
+
+audio.addEventListener(
+  "ended",
+  ()=>{
+
+    if(repeatMode){
+
+      audio.currentTime=0;
+
+      audio.play().catch(()=>{});
+
+    }else{
+
+      nextSong();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+audio.addEventListener(
+  "timeupdate",
+  ()=>{
+
+    if(!audio.duration)
+      return;
+
+    progress.value =
+      (audio.currentTime /
+       audio.duration) * 100;
+
+    currentTime.textContent =
+      formatTime(
+        audio.currentTime
+      );
+
+  }
+);
+
+
+audio.addEventListener(
+  "loadedmetadata",
+  ()=>{
+
+    duration.textContent =
+      formatTime(
+        audio.duration
+      );
+
+    updateMediaSession();
+
+  }
+);
+
+
+progress.addEventListener(
+  "input",
+  ()=>{
+
+    if(!audio.duration)
+      return;
+
+    audio.currentTime =
+      Number(progress.value) /
+      100 *
+      audio.duration;
+
+  }
+);
+
+
+/* =========================
+   VOLUME
+========================= */
+
+audio.volume=1;
+
+volume.addEventListener(
+  "input",
+  ()=>{
+
+    const value =
+      Number(volume.value);
+
+    audio.volume=value;
+
+    if(value > 0){
+
+      lastVolume=value;
+
+      audio.muted=false;
+
+    }
+
+    updateVolumeIcon();
+
+  }
+);
+
+
+muteButton.addEventListener(
+  "click",
+  ()=>{
+
+    if(
+      audio.muted ||
+      audio.volume === 0
+    ){
+
+      audio.muted=false;
+
+      audio.volume =
+        lastVolume > 0
+          ? lastVolume
+          : 1;
+
+      volume.value =
+        audio.volume;
+
+    }else{
+
+      lastVolume =
+        audio.volume;
+
+      audio.muted=true;
+
+    }
+
+    updateVolumeIcon();
+
+  }
+);
+
+
+function updateVolumeIcon(){
+
+  if(
+    audio.muted ||
+    audio.volume === 0
+  ){
+
+    muteButton.textContent="🔇";
+
+  }else if(
+    audio.volume < .35
+  ){
+
+    muteButton.textContent="🔈";
+
+  }else if(
+    audio.volume < .7
+  ){
+
+    muteButton.textContent="🔉";
+
+  }else{
+
+    muteButton.textContent="🔊";
+
+  }
+
+}
+
+updateVolumeIcon();
+
+
+/* =========================
+   SHUFFLE
+========================= */
+
+shuffleButton.addEventListener(
+  "click",
+  ()=>{
+
+    shuffleMode =
+      !shuffleMode;
+
+    shuffleButton.classList.toggle(
+      "active",
+      shuffleMode
+    );
+
+  }
+);
+
+
+/* =========================
+   REPEAT
+========================= */
+
+repeatButton.addEventListener(
+  "click",
+  ()=>{
+
+    repeatMode =
+      !repeatMode;
+
+    repeatButton.classList.toggle(
+      "active",
+      repeatMode
+    );
+
+  }
+);
+
+
+/* =========================
+   FAVORITES
+========================= */
+
+favoriteButton.addEventListener(
+  "click",
+  ()=>{
+
+    if(!songs.length)
+      return;
+
+    songs[currentIndex].favorite =
+      !songs[currentIndex].favorite;
+
+    updateFavorite();
+
+    renderPlaylist();
+
+  }
+);
+
+
+function updateFavorite(){
+
+  if(!songs.length){
+
+    favoriteButton.textContent="♡";
+
+    favoriteButton.classList.remove(
+      "active"
+    );
+
+    return;
+
+  }
+
+  const yes =
+    songs[currentIndex].favorite;
+
+  favoriteButton.textContent =
+    yes ? "♥" : "♡";
+
+  favoriteButton.classList.toggle(
+    "active",
+    yes
+  );
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+searchInput.addEventListener(
+  "input",
+  renderPlaylist
+);
+
+
+/* =========================
+   PLAYLIST
+========================= */
+
+function renderPlaylist(){
+
+  playlist.innerHTML="";
+
+  const query =
+    searchInput.value
+      .toLowerCase();
+
+  const filtered =
+    songs
+      .map(
+        (song,index)=>({
+          song,
+          index
+        })
+      )
+      .filter(item=>{
+
+        const search =
+          cleanName(
+            item.song.name
+          )
+          .toLowerCase()
+          .includes(query);
+
+        const fav =
+          !favoritesOnly ||
+          item.song.favorite;
+
+        return search && fav;
+
+      });
+
+
+  songCount.textContent =
+    songs.length +
+    (
+      songs.length === 1
+      ? " song"
+      : " songs"
+    );
+
+
+  if(!filtered.length){
+
+    playlist.innerHTML=`
+
+      <div class="empty glass">
+
+        <div class="empty-icon">
+          ${favoritesOnly ? "♡" : "🎵"}
+        </div>
+
+        <strong>
+          ${
+            favoritesOnly
+            ? "No favorite songs"
+            : "No music found"
+          }
+        </strong>
+
+        <span>
+          ${
+            favoritesOnly
+            ? "Tap ♡ to favorite a song"
+            : "Tap + to choose MP3 files"
+          }
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  filtered.forEach(
+    (item,displayIndex)=>{
+
+      const song =
+        item.song;
+
+      const index =
+        item.index;
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "song glass";
+
+      if(index === currentIndex){
+
+        row.classList.add(
+          "active"
+        );
+
+      }
+
+
+      row.innerHTML=`
+
+        <div class="num">
+          ${displayIndex+1}
+        </div>
+
+        <div class="song-art">
+          ♪
+        </div>
+
+        <div class="song-info">
+
+          <div class="song-name">
+
+            ${escapeHTML(
+              cleanName(song.name)
+            )}
+
+          </div>
+
+          <div class="status">
+
+            ${
+              index === currentIndex &&
+              !audio.paused
+
+              ? "▶ Playing now"
+
+              : "Local MP3"
+            }
+
+          </div>
+
+        </div>
+
+        <button
+          class="song-fav
+          ${song.favorite ? "active" : ""}">
+
+          ${
+            song.favorite
+            ? "♥"
+            : "♡"
+          }
+
+        </button>
+
+      `;
+
+
+      row.addEventListener(
+        "click",
+        event=>{
+
+          if(
+            event.target.closest(
+              ".song-fav"
+            )
+          ){
+
+            song.favorite =
+              !song.favorite;
+
+            if(
+              index === currentIndex
+            ){
+
+              updateFavorite();
+
+            }
+
+            renderPlaylist();
+
+            return;
+
+          }
+
+
+          loadSong(index);
+
+          audio.play().catch(()=>{});
+
+        }
+      );
+
+
+      playlist.appendChild(row);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+document
+  .getElementById("musicTab")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      favoritesOnly=false;
+
+      document
+        .getElementById("musicTab")
+        .classList.add("active");
+
+      document
+        .getElementById("favoriteTab")
+        .classList.remove("active");
+
+      document
+        .getElementById("themeTab")
+        .classList.remove("active");
+
+      themePanel
+        .classList.remove("show");
+
+      renderPlaylist();
+
+    }
+  );
+
+
+document
+  .getElementById("favoriteTab")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      favoritesOnly=true;
+
+      document
+        .getElementById("favoriteTab")
+        .classList.add("active");
+
+      document
+        .getElementById("musicTab")
+        .classList.remove("active");
+
+      document
+        .getElementById("themeTab")
+        .classList.remove("active");
+
+      themePanel
+        .classList.remove("show");
+
+      renderPlaylist();
+
+    }
+  );
+
+
+document
+  .getElementById("themeTab")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      themePanel
+        .classList.toggle("show");
+
+      document
+        .getElementById("themeTab")
+        .classList.add("active");
+
+      document
+        .getElementById("musicTab")
+        .classList.remove("active");
+
+      document
+        .getElementById("favoriteTab")
+        .classList.remove("active");
+
+    }
+  );
+
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+fullscreenButton.addEventListener(
+  "click",
+  async()=>{
+
+    try{
+
+      if(!document.fullscreenElement){
+
+        await document
+          .documentElement
+          .requestFullscreen();
+
+      }else{
+
+        await document
+          .exitFullscreen();
+
+      }
+
+    }catch(error){
+
+      console.log(
+        "Fullscreen is not supported here."
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================
+   MEDIA / LOCK SCREEN
+========================= */
+
+function updateMediaSession(){
+
+  if(
+    !("mediaSession" in navigator) ||
+    !songs.length
+  )
+    return;
+
+  try{
+
+    navigator.mediaSession.metadata =
+      new MediaMetadata({
+
+        title:
+          cleanName(
+            songs[currentIndex].name
+          ),
+
+        artist:
+          "Enaiat Music",
+
+        album:
+          "Pulse • Created by Enaiat"
+
+      });
+
+  }catch(e){}
+
+}
+
+
+if("mediaSession" in navigator){
+
+  try{
+
+    navigator.mediaSession.setActionHandler(
+      "play",
+      ()=>audio.play()
+    );
+
+    navigator.mediaSession.setActionHandler(
+      "pause",
+      ()=>audio.pause()
+    );
+
+    navigator.mediaSession.setActionHandler(
+      "nexttrack",
+      ()=>nextSong()
+    );
+
+    navigator.mediaSession.setActionHandler(
+      "previoustrack",
+      ()=>previousButton.click()
+    );
+
+  }catch(e){}
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function cleanName(name){
+
+  return name
+    .replace(/\.[^/.]+$/,"")
+    .replace(/[_-]/g," ");
+
+}
+
+
+function formatTime(seconds){
+
+  if(isNaN(seconds))
+    return "0:00";
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  const secs =
+    Math.floor(seconds % 60)
+      .toString()
+      .padStart(2,"0");
+
+  return minutes + ":" + secs;
+
+}
+
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent=text;
+
+  return div.innerHTML;
+
+}
+
+
+/* INITIAL */
+
+renderPlaylist();
+
+</script>
+
+</body>
+</html>
